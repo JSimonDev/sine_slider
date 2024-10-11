@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -57,7 +55,6 @@ class _SineSlider extends LeafRenderObjectWidget {
   final ValueChanged<double>? onChangeEnd;
 
   const _SineSlider({
-    super.key,
     required this.value,
     required this.vsync,
     required this.onChanged,
@@ -323,7 +320,7 @@ class _RenderSineSlider extends RenderBox implements MouseTrackerAnnotation {
 
     final left = offset.dx + padding;
     final top = offset.dy + (parentBox.size.height - height) / 2;
-    final right = left + parentBox.size.width - padding * 2;
+    final right = left + parentBox.size.width - (padding * 2);
     final bottom = top + height;
 
     return Rect.fromLTRB(
@@ -348,6 +345,24 @@ class _RenderSineSlider extends RenderBox implements MouseTrackerAnnotation {
 
     return math.max(r + 0.5, 1.5);
   }
+
+  /// Using tangent function to generate the wave
+  // double _f({
+  //   required double a,
+  //   required double l,
+  //   required double x,
+  // }) {
+  //   const double doublePi = math.pi * 2;
+  //   double value = a * math.tan((doublePi * x) / l);
+
+  //   // Definir el valor máximo permitido para limitar la altura de las ondas
+  //   const double maxValue =
+  //       15.0; // Puedes ajustar este valor según tus necesidades
+  //   const double minValue = -15.0;
+
+  //   // Limitar el valor entre minValue y maxValue
+  //   return value.clamp(minValue, maxValue);
+  // }
 
   double _f({
     required double a,
@@ -563,11 +578,10 @@ class _RenderSineSlider extends RenderBox implements MouseTrackerAnnotation {
   double _getValueFromGlobalPosition(Offset globalPosition) {
     final trackRect = _getTrackRect(
       parentBox: this,
-      offset: Offset.zero,
     );
+    final globalToLocal = this.globalToLocal(globalPosition);
 
-    return (globalToLocal(globalPosition).dx - trackRect.left) /
-        trackRect.width;
+    return (globalToLocal.dx - trackRect.left) / trackRect.width;
   }
 
   void _startInteraction(Offset globalPosition) {
@@ -634,7 +648,6 @@ class _RenderSineSlider extends RenderBox implements MouseTrackerAnnotation {
 
     final trackRect = _getTrackRect(
       parentBox: this,
-      offset: Offset.zero,
     );
 
     final valueDelta = details.primaryDelta! / trackRect.width;

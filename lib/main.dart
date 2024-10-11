@@ -16,20 +16,50 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         body: Builder(
           builder: (context) {
-            return SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: const Center(
-                  child: SizedBox(
-                    width: 300,
-                    child: _SineSlider(),
-                  ),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NormalSlider(),
+                    _SineSlider(),
+                  ],
                 ),
               ),
             );
           },
         ),
       ),
+    );
+  }
+}
+
+class NormalSlider extends StatefulWidget {
+  const NormalSlider({
+    super.key,
+  });
+
+  @override
+  State<NormalSlider> createState() => _NormalSliderState();
+}
+
+class _NormalSliderState extends State<NormalSlider> {
+  double _value = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Slider(
+          value: _value,
+          onChanged: (value) {
+            setState(() => _value = value);
+          },
+        ),
+        SizedBox(height: 20),
+        Text('Value: $_value', style: TextStyle(color: Colors.white)),
+      ],
     );
   }
 }
@@ -46,13 +76,19 @@ class __SineSliderState extends State<_SineSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return SineSlider(
-      value: _value,
-      onChanged: (value) {
-        setState(() => _value = value);
-      },
-      onChangeStart: (value) {},
-      onChangeEnd: (value) {},
+    return Column(
+      children: [
+        SineSlider(
+          value: _value,
+          onChanged: (value) {
+            setState(() => _value = value);
+          },
+          onChangeStart: (value) {},
+          onChangeEnd: (value) {},
+        ),
+        SizedBox(height: 20),
+        Text('Value: $_value', style: TextStyle(color: Colors.white)),
+      ],
     );
   }
 }
