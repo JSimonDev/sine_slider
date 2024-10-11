@@ -58,7 +58,10 @@ class _NormalSliderState extends State<NormalSlider> {
           },
         ),
         SizedBox(height: 20),
-        Text('Value: $_value', style: TextStyle(color: Colors.white)),
+        Text(
+          'Value: $_value',
+          style: TextStyle(color: Colors.white),
+        ),
       ],
     );
   }
@@ -87,7 +90,10 @@ class __SineSliderState extends State<_SineSlider> {
           onChangeEnd: (value) {},
         ),
         SizedBox(height: 20),
-        Text('Value: $_value', style: TextStyle(color: Colors.white)),
+        Text(
+          'Value: $_value',
+          style: TextStyle(color: Colors.white),
+        ),
       ],
     );
   }
